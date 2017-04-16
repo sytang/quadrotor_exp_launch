@@ -79,11 +79,11 @@
 
     <!-- manager --> 
     <node pkg="mav_manager"
-      type="mav_manager_node"
-      name="mav_manager"
+      type="mav_services"
+      name="mav_services"
       clear_params="true"
       output="screen">
-      <rosparam file="$(find payload_launch)/config/mav_manager.yaml"/>
+      <rosparam file="$(find payload_launch)/config/mav_manager_params.yaml" />
     </node>
 
 
