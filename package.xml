@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>payload_launch</name>
+  <name>quadrotor_exp_launch</name>
   <version>0.0.0</version>
-  <description>The payload_launch package</description>
+  <description>The quadrotor_exp_launch package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
