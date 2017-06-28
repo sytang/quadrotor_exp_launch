@@ -19,7 +19,3 @@ corrections:
   r: 0.0
   p: 0.0
 
-constants: 
-  mL: 0.08
-  l: 0.5
-  g: 9.81

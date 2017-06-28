@@ -1,0 +1,6 @@
+radius: 0.5
+vmax: 1.0
+dynamics_order: 4
+dynamic_model: QuadrotorPointload
+cable_length: 0.8
+payload_radius: 0.2

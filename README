@@ -1,3 +1,9 @@
 quadrotor_exp_launch
 
 Store launch files for quadrotor experiments. 
+
+ISRR2017_exp:
+  Depends on: multirobot_planning/hoop, multirobot_planning/capt, trajectory_generation (all projects), quadrotor_control (all projects)
+
+  To run experiments: 
+    The folder tests/ contains text files that specify the pre-generated trajectories. 
