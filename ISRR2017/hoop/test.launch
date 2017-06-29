@@ -6,6 +6,27 @@
 
   <param name="simulator_frame" value="simulator"/>
   <rosparam file="$(find quadrotor_exp_launch)/ISRR2017/config/quadrotor_names.yaml"/>
+  <rosparam file="$(find hoop)/config/pointload_params.yaml" />
+  <param name="debug" value="false"/>
+
+  <!-- For the planning problem.-->
+  <node pkg="hoop"
+    type="hoop_main"
+    name="hoop"
+    output="screen">
+    <rosparam file="$(find hoop)/config/goals_2.yaml" />
+    <param name="precision" value="Double"/>
+    <param name="basis" value="Power"/>
+    <param name="centralized" value="true"/>
+    <param name="goal_threshold" value="0.01"/>
+  </node>
+
+  <!-- IS THISOKAY?-->
+  <node pkg="tf" 
+    type="static_transform_publisher" 
+    name="simulator_broadcaster" 
+    args="0 0 0 0 0 0 1 map simulator 100">
+  </node>
 
   <node pkg="multirobot_quadrotor"
     type="multi_mav_services"
@@ -20,21 +41,10 @@
   </include>
 
   <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
-    <arg name="name" value="Victor"/>
-    <arg name="initial_position_payload/x" value="0.0"/>
-    <arg name="initial_position_payload/y" value="0.0"/>
-    <arg name="initial_position_payload/z" value="2.0"/>
-    <arg name="home_path" value="$(arg home_path)"/>
-    <arg name="sim" value="$(arg sim)"/>
-    <arg name="mass"  value="$(arg mass)"/>
-    <arg name="zigbee"  value="$(arg zigbee)"/>
-  </include> 
-
-  <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
     <arg name="name" value="Dopey"/>
     <arg name="initial_position_payload/x" value="1.0"/>
     <arg name="initial_position_payload/y" value="0.0"/>
-    <arg name="initial_position_payload/z" value="4.0"/>
+    <arg name="initial_position_payload/z" value="0.0"/>
     <arg name="home_path" value="$(arg home_path)"/>
     <arg name="sim" value="$(arg sim)"/>
     <arg name="mass"  value="$(arg mass)"/>
@@ -45,7 +55,7 @@
     <arg name="name" value="Sleepy"/>
     <arg name="initial_position_payload/x" value="3.0"/>
     <arg name="initial_position_payload/y" value="0.0"/>
-    <arg name="initial_position_payload/z" value="3.5"/>
+    <arg name="initial_position_payload/z" value="0.0"/>
     <arg name="home_path" value="$(arg home_path)"/>
     <arg name="sim" value="$(arg sim)"/>
     <arg name="mass"  value="$(arg mass)"/>

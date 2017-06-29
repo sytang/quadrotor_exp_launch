@@ -17,6 +17,27 @@ SCRIPT_TEMPLATE = """<launch>
 
   <param name="simulator_frame" value="simulator"/>
   <rosparam file="$(find quadrotor_exp_launch)/ISRR2017/config/quadrotor_names.yaml"/>
+  <rosparam file="$(find hoop)/config/pointload_params.yaml" />
+  <param name="debug" value="false"/>
+
+  <!-- For the planning problem.-->
+  <node pkg="hoop"
+    type="hoop_main"
+    name="hoop"
+    output="screen">
+    <rosparam file="$(find hoop)/config/goals_2.yaml" />
+    <param name="precision" value="Double"/>
+    <param name="basis" value="Power"/>
+    <param name="centralized" value="true"/>
+    <param name="goal_threshold" value="0.01"/>
+  </node>
+
+  <!-- IS THISOKAY?-->
+  <node pkg="tf" 
+    type="static_transform_publisher" 
+    name="simulator_broadcaster" 
+    args="0 0 0 0 0 0 1 map simulator 100">
+  </node>
 
   <node pkg="multirobot_quadrotor"
     type="multi_mav_services"

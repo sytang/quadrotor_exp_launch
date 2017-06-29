@@ -59,29 +59,6 @@ Visualization Manager:
       Value: true
     - Class: rviz/Marker
       Enabled: true
-      Marker Topic: /QuadrotorVictor/payload_visualization/robot
-      Name: Robot
-      Namespaces:
-        /QuadrotorVictor/payload_visualization: true
-      Queue Size: 6
-      Value: true
-    - Class: rviz/Marker
-      Enabled: true
-      Marker Topic: /QuadrotorVictor/trajectory_visualization/robot_current_traj
-      Name: Marker
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
-    - Class: rviz/Axes
-      Enabled: true
-      Length: 1
-      Name: Axes
-      Radius: 0.0299999993
-      Reference Frame: <Fixed Frame>
-      Value: true
-    - Class: rviz/Marker
-      Enabled: true
       Marker Topic: /QuadrotorDopey/payload_visualization/robot
       Name: Robot
       Namespaces:

@@ -10,7 +10,6 @@
     <param name="publish_tf" value="false"/>
     <param name="fixed_frame_id" value="mocap"/>
     <rosparam param="model_list">[]</rosparam>
-    <remap from="vicon/QuadrotorVictor/odom" to="QuadrotorVictor/odom"/>
     <remap from="vicon/QuadrotorDopey/odom" to="QuadrotorDopey/odom"/>
     <remap from="vicon/QuadrotorSleepy/odom" to="QuadrotorSleepy/odom"/>
 

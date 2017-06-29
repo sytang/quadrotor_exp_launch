@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ROBOT="QuadrotorHappy"
+ROBOT="QuadrotorVictor"
 
 read -p "Press [Enter] to start motors"
 echo "Enable motors..."
