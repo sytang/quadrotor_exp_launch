@@ -1,0 +1,57 @@
+<launch>
+  <arg name="home_path" default="/home/sytang/catkin_multirobot/src/quadrotor_exp_launch/ISRR2017/hoop"/>
+  <arg name="sim" default="1"/>
+  <arg name="mass" default="0.6650"/>
+  <arg name="zigbee" default="1"/>
+
+  <param name="simulator_frame" value="simulator"/>
+  <rosparam file="$(find quadrotor_exp_launch)/ISRR2017/config/quadrotor_names.yaml"/>
+
+  <node pkg="multirobot_quadrotor"
+    type="multi_mav_services"
+    name="multi_mav_services"
+    output="screen">
+  </node>
+
+  <!-- vicon node --> 
+  <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/vicon.launch" unless="$(arg sim)">
+  <!--  <arg name="model" value="$(arg model)" /> -->
+  <!--arg name="vicon_fps" value="100"/-->
+  </include>
+
+  <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
+    <arg name="name" value="Victor"/>
+    <arg name="initial_position_payload/x" value="0.0"/>
+    <arg name="initial_position_payload/y" value="0.0"/>
+    <arg name="initial_position_payload/z" value="2.0"/>
+    <arg name="home_path" value="$(arg home_path)"/>
+    <arg name="sim" value="$(arg sim)"/>
+    <arg name="mass"  value="$(arg mass)"/>
+    <arg name="zigbee"  value="$(arg zigbee)"/>
+  </include> 
+
+  <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
+    <arg name="name" value="Dopey"/>
+    <arg name="initial_position_payload/x" value="1.0"/>
+    <arg name="initial_position_payload/y" value="0.0"/>
+    <arg name="initial_position_payload/z" value="4.0"/>
+    <arg name="home_path" value="$(arg home_path)"/>
+    <arg name="sim" value="$(arg sim)"/>
+    <arg name="mass"  value="$(arg mass)"/>
+    <arg name="zigbee"  value="$(arg zigbee)"/>
+  </include> 
+
+  <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
+    <arg name="name" value="Sleepy"/>
+    <arg name="initial_position_payload/x" value="3.0"/>
+    <arg name="initial_position_payload/y" value="0.0"/>
+    <arg name="initial_position_payload/z" value="3.5"/>
+    <arg name="home_path" value="$(arg home_path)"/>
+    <arg name="sim" value="$(arg sim)"/>
+    <arg name="mass"  value="$(arg mass)"/>
+    <arg name="zigbee"  value="$(arg zigbee)"/>
+  </include> 
+
+  
+
+</launch>  
