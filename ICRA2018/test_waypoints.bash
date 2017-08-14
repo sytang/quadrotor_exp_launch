@@ -14,7 +14,7 @@ sleep 1
 
 read -p "Press [Enter] to go to initial position"
 echo "Going to position..."
-rosservice call /$ROBOT/mav_services/goTo '{goal: [-5.0, 1.0, 1.0, 0.0]}'
+rosservice call /$ROBOT/mav_services/goTo '{goal: [-3.0, 1.0, 1.0, 0.0]}'
 sleep 1
 
 read -p "Press [Enter] to load trajectory waypoints"
@@ -24,6 +24,6 @@ sleep 1
 
 read -p "Press [Enter] to follow trajectory waypoints"
 echo "Following waypoints..."
-rosservice call /$ROBOT/mav_services/followWaypoints "{relative: false}" 
+rosservice call /$ROBOT/mav_services/followWaypoints "{relative: true}" 
 sleep 1
 
