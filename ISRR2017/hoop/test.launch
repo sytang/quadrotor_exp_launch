@@ -1,12 +1,12 @@
 <launch>
   <arg name="home_path" default="/home/sytang/catkin_multirobot/src/quadrotor_exp_launch/ISRR2017/hoop"/>
   <arg name="sim" default="1"/>
-  <arg name="mass" default="0.6650"/>
+  <arg name="mass" default="0.70"/>
   <arg name="zigbee" default="1"/>
 
   <param name="simulator_frame" value="simulator"/>
   <rosparam file="$(find quadrotor_exp_launch)/ISRR2017/config/quadrotor_names.yaml"/>
-  <rosparam file="$(find hoop)/config/pointload_params.yaml" />
+  <rosparam file="$(find quadrotor_exp_launch)/ISRR2017/config/pointload_params.yaml" />
   <param name="debug" value="false"/>
 
   <!-- For the planning problem.-->
@@ -14,8 +14,8 @@
     type="hoop_main"
     name="hoop"
     output="screen">
-    <rosparam file="$(find hoop)/config/goals_2.yaml" />
-    <param name="precision" value="Double"/>
+    <rosparam file="$(find quadrotor_exp_launch)/ISRR2017/config/goals_6.yaml" />
+    <param name="precision" value="Float"/>
     <param name="basis" value="Power"/>
     <param name="centralized" value="true"/>
     <param name="goal_threshold" value="0.01"/>
@@ -41,25 +41,111 @@
   </include>
 
   <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
-    <arg name="name" value="Dopey"/>
-    <arg name="initial_position_payload/x" value="1.0"/>
+    <arg name="name" value="Tango"/>
+    <arg name="initial_position_payload/x" value="0.0"/>
     <arg name="initial_position_payload/y" value="0.0"/>
     <arg name="initial_position_payload/z" value="0.0"/>
     <arg name="home_path" value="$(arg home_path)"/>
     <arg name="sim" value="$(arg sim)"/>
     <arg name="mass"  value="$(arg mass)"/>
     <arg name="zigbee"  value="$(arg zigbee)"/>
+    <arg name="usb_num" value="0"/>
   </include> 
 
   <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
-    <arg name="name" value="Sleepy"/>
-    <arg name="initial_position_payload/x" value="3.0"/>
+    <arg name="name" value="Victor"/>
+    <arg name="initial_position_payload/x" value="0.0"/>
     <arg name="initial_position_payload/y" value="0.0"/>
     <arg name="initial_position_payload/z" value="0.0"/>
     <arg name="home_path" value="$(arg home_path)"/>
     <arg name="sim" value="$(arg sim)"/>
     <arg name="mass"  value="$(arg mass)"/>
     <arg name="zigbee"  value="$(arg zigbee)"/>
+    <arg name="usb_num" value="1"/>
+  </include> 
+
+  <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
+    <arg name="name" value="Happy"/>
+    <arg name="initial_position_payload/x" value="0.0"/>
+    <arg name="initial_position_payload/y" value="0.0"/>
+    <arg name="initial_position_payload/z" value="0.0"/>
+    <arg name="home_path" value="$(arg home_path)"/>
+    <arg name="sim" value="$(arg sim)"/>
+    <arg name="mass"  value="$(arg mass)"/>
+    <arg name="zigbee"  value="$(arg zigbee)"/>
+    <arg name="usb_num" value="2"/>
+  </include> 
+
+  <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
+    <arg name="name" value="Sneezy"/>
+    <arg name="initial_position_payload/x" value="0.0"/>
+    <arg name="initial_position_payload/y" value="0.0"/>
+    <arg name="initial_position_payload/z" value="0.0"/>
+    <arg name="home_path" value="$(arg home_path)"/>
+    <arg name="sim" value="$(arg sim)"/>
+    <arg name="mass"  value="$(arg mass)"/>
+    <arg name="zigbee"  value="$(arg zigbee)"/>
+    <arg name="usb_num" value="3"/>
+  </include> 
+
+  <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
+    <arg name="name" value="Uniform"/>
+    <arg name="initial_position_payload/x" value="0.0"/>
+    <arg name="initial_position_payload/y" value="0.0"/>
+    <arg name="initial_position_payload/z" value="0.0"/>
+    <arg name="home_path" value="$(arg home_path)"/>
+    <arg name="sim" value="$(arg sim)"/>
+    <arg name="mass"  value="$(arg mass)"/>
+    <arg name="zigbee"  value="$(arg zigbee)"/>
+    <arg name="usb_num" value="4"/>
+  </include> 
+
+  <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
+    <arg name="name" value="Xray"/>
+    <arg name="initial_position_payload/x" value="0.0"/>
+    <arg name="initial_position_payload/y" value="0.0"/>
+    <arg name="initial_position_payload/z" value="0.0"/>
+    <arg name="home_path" value="$(arg home_path)"/>
+    <arg name="sim" value="$(arg sim)"/>
+    <arg name="mass"  value="$(arg mass)"/>
+    <arg name="zigbee"  value="$(arg zigbee)"/>
+    <arg name="usb_num" value="5"/>
+  </include> 
+
+  <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
+    <arg name="name" value="Whiskey"/>
+    <arg name="initial_position_payload/x" value="0.0"/>
+    <arg name="initial_position_payload/y" value="0.0"/>
+    <arg name="initial_position_payload/z" value="0.0"/>
+    <arg name="home_path" value="$(arg home_path)"/>
+    <arg name="sim" value="$(arg sim)"/>
+    <arg name="mass"  value="$(arg mass)"/>
+    <arg name="zigbee"  value="$(arg zigbee)"/>
+    <arg name="usb_num" value="6"/>
+  </include> 
+
+  <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
+    <arg name="name" value="Dopey"/>
+    <arg name="initial_position_payload/x" value="0.0"/>
+    <arg name="initial_position_payload/y" value="0.0"/>
+    <arg name="initial_position_payload/z" value="0.0"/>
+    <arg name="home_path" value="$(arg home_path)"/>
+    <arg name="sim" value="$(arg sim)"/>
+    <arg name="mass"  value="$(arg mass)"/>
+    <arg name="zigbee"  value="$(arg zigbee)"/>
+    <arg name="usb_num" value="7"/>
+  </include> 
+
+  <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
+    <arg name="name" value="Grumpy"/>
+    <arg name="initial_position_payload/x" value="0.0"/>
+    <arg name="initial_position_payload/y" value="0.0"/>
+    <arg name="initial_position_payload/z" value="0.0"/>
+    <arg name="home_path" value="$(arg home_path)"/>
+    <arg name="sim" value="$(arg sim)"/>
+    <arg name="mass"  value="$(arg mass)"/>
+    <arg name="zigbee"  value="$(arg zigbee)"/>
+    <arg name="usb_num" value="8"/>
   </include> 
 
   

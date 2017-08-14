@@ -1,0 +1,8 @@
+height: 1.0
+robot_names: ["robot_1", "robot_2"]
+starts_x: [-1.0, -6.0]
+starts_y: [0.0, 0.0]
+starts_z: [1.0, 1.0]
+goals_x : [-5.0, 0.0]
+goals_y: [1.0, 1.0]
+goals_z: [1.0, 1.0]

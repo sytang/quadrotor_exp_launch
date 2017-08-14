@@ -59,6 +59,167 @@ Visualization Manager:
       Value: true
     - Class: rviz/Marker
       Enabled: true
+      Marker Topic: /QuadrotorTango/payload_visualization/robot
+      Name: Robot
+      Namespaces:
+        /QuadrotorTango/payload_visualization: true
+      Queue Size: 6
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /QuadrotorTango/trajectory_visualization/robot_current_traj
+      Name: Marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 1
+      Name: Axes
+      Radius: 0.0299999993
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /QuadrotorVictor/payload_visualization/robot
+      Name: Robot
+      Namespaces:
+        /QuadrotorVictor/payload_visualization: true
+      Queue Size: 6
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /QuadrotorVictor/trajectory_visualization/robot_current_traj
+      Name: Marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 1
+      Name: Axes
+      Radius: 0.0299999993
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /QuadrotorHappy/payload_visualization/robot
+      Name: Robot
+      Namespaces:
+        /QuadrotorHappy/payload_visualization: true
+      Queue Size: 6
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /QuadrotorHappy/trajectory_visualization/robot_current_traj
+      Name: Marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 1
+      Name: Axes
+      Radius: 0.0299999993
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /QuadrotorSneezy/payload_visualization/robot
+      Name: Robot
+      Namespaces:
+        /QuadrotorSneezy/payload_visualization: true
+      Queue Size: 6
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /QuadrotorSneezy/trajectory_visualization/robot_current_traj
+      Name: Marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 1
+      Name: Axes
+      Radius: 0.0299999993
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /QuadrotorUniform/payload_visualization/robot
+      Name: Robot
+      Namespaces:
+        /QuadrotorUniform/payload_visualization: true
+      Queue Size: 6
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /QuadrotorUniform/trajectory_visualization/robot_current_traj
+      Name: Marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 1
+      Name: Axes
+      Radius: 0.0299999993
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /QuadrotorXray/payload_visualization/robot
+      Name: Robot
+      Namespaces:
+        /QuadrotorXray/payload_visualization: true
+      Queue Size: 6
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /QuadrotorXray/trajectory_visualization/robot_current_traj
+      Name: Marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 1
+      Name: Axes
+      Radius: 0.0299999993
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /QuadrotorWhiskey/payload_visualization/robot
+      Name: Robot
+      Namespaces:
+        /QuadrotorWhiskey/payload_visualization: true
+      Queue Size: 6
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /QuadrotorWhiskey/trajectory_visualization/robot_current_traj
+      Name: Marker
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Axes
+      Enabled: true
+      Length: 1
+      Name: Axes
+      Radius: 0.0299999993
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
       Marker Topic: /QuadrotorDopey/payload_visualization/robot
       Name: Robot
       Namespaces:
@@ -82,15 +243,15 @@ Visualization Manager:
       Value: true
     - Class: rviz/Marker
       Enabled: true
-      Marker Topic: /QuadrotorSleepy/payload_visualization/robot
+      Marker Topic: /QuadrotorGrumpy/payload_visualization/robot
       Name: Robot
       Namespaces:
-        /QuadrotorSleepy/payload_visualization: true
+        /QuadrotorGrumpy/payload_visualization: true
       Queue Size: 6
       Value: true
     - Class: rviz/Marker
       Enabled: true
-      Marker Topic: /QuadrotorSleepy/trajectory_visualization/robot_current_traj
+      Marker Topic: /QuadrotorGrumpy/trajectory_visualization/robot_current_traj
       Name: Marker
       Namespaces:
         {}

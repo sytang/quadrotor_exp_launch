@@ -1,0 +1,27 @@
+TO RUN EXPERIMENTS:
+
+Put parameters in quadrotor_names.yaml, pointload_params.yaml, and goals.yaml.
+
+Run the following scripts to generate the needed files:
+
+./write_vicon_node.py ../config/quadrotor_names.yaml vicon.launch 
+
+./write_files.py ../config/quadrotor_names.yaml test.launch rviz_config.rviz 
+
+./write_rosbag_script.py ../config/quadrotor_names.yaml log_data.sh
+
+chmod +x log_data.sh
+
+Then, launch test.launch, rviz.launch (if you want).
+
+Run run_HOOP.sh.
+  
+    This script will call HOOP and get trajectories.
+
+    Get the current location of all robots and "assign" a physical robot to a virtual robot index ii (this is so we don't have to deliberately place robots in positions.)
+
+    Take off.
+
+    Go to the start position.
+
+    Execute trajectory.

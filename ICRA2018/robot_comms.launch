@@ -3,7 +3,6 @@
   <arg name="baud_rate" default="57600"/>
   <arg name="comms_standalone" default="0"/>
   <arg name="zigbee" default="0"/>
-  <arg name="usb_num"/>
 
   <node pkg="nodelet"
     type="nodelet"
@@ -19,7 +18,7 @@
     args="load quad_serial_comm/QuadSerialComm standalone_nodelet"
     output="screen"
     if="$(arg zigbee)">
-    <param name="device" value="/dev/ttyUSB$(arg usb_num)"/>
+    <param name="device" value="/dev/ttyUSB0"/>
     <param name="baud_rate" value="$(arg baud_rate)"/>
     <remap from="~to_robot" to="to_robot"/>
     <remap from="~from_robot" to="from_robot"/>

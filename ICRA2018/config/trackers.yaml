@@ -1,0 +1,8 @@
+trackers:
+  - std_trackers/LineTrackerMinJerkAction
+  - std_trackers/LineTrackerDistanceAction
+  - std_trackers/VelocityTrackerAction
+  - std_trackers/NullTracker
+  - traj_quadrotor/TrajectoryTrackerCoeffsAction
+  #- payload_trackers/PointloadFFTrackerAction
+  - std_trackers/CircleTrackerAction

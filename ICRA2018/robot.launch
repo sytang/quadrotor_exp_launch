@@ -1,0 +1,141 @@
+<launch>
+
+  <arg name="name" default="Dopey"/>
+  <arg name="model" default="Quadrotor$(arg name)"/>
+  <arg name="home_path" default="/home/sytang/catkin_multirobot/src/quadrotor_exp_launch/ICRA2018/"/>
+  <arg name="sim" default="1"/>
+  <arg name="mass" default="0.6650"/>
+  <arg name="zigbee" default="1"/>
+  <arg name="use_estimator" default="0"/>
+
+  <!-- vicon node --> 
+  <include file="$(find quadrotor_exp_launch)/ICRA2018/vicon.launch" unless="$(arg sim)">
+    <arg name="model" value="$(arg model)" /> 
+  <!--arg name="vicon_fps" value="100"/-->
+  </include>
+
+  <group ns="$(arg model)">
+  
+    <param name="mass" value="$(arg mass)"/>
+
+    <!-- simulation things --> 
+    <group if="$(arg sim)">
+    <node pkg="quadrotor_simulator"
+      type="quadrotor_simulator_so3"
+      name="quadrotor_simulator_so3"
+      output="screen">
+      <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/hummingbird_params.yaml"/>
+      <param name="rate/odom" value="100.0"/>
+      <remap from="~odom" to="odom_quadrotor"/>
+      <remap from="~odom_payload" to="odom_payload"/>
+      <remap from="~odom_internal" to="odom_internal"/>
+      <remap from="~imu" to="imu"/>
+      <remap from="~cmd" to="so3_cmd"/>
+    </node>
+    </group>
+
+    <node pkg="payload_visualization"
+      type="pointload_visualization"
+      name="payload_visualization"
+      output="screen">
+      <param name="mesh_resource" value="package://mesh_visualization/mesh/hummingbird.mesh"/>
+      <param name="color/r" value="0.0"/>
+      <param name="color/g" value="0.0"/>
+      <param name="color/b" value="1.0"/>
+      <param name="color/a" value="0.7"/>
+      <param name="radius_payload" value="0.2"/>
+      <remap from="~input" to="odom_internal"/>
+    </node>
+
+    <node pkg="traj_quadrotor"
+      type="trajectory_visualization"
+      name="trajectory_visualization"
+      output="screen">
+      <remap from="~input" to="current_traj"/>
+      <remap from="~unpublish_traj" to="unpublish_traj"/>
+      <param name="sample_rate" value="0.5"/>
+    </node>
+
+    <!-- controller things --> 
+    <node pkg="nodelet"
+      type="nodelet"
+      name="standalone_nodelet"
+      args="manager"
+      output="screen"/>
+
+    <node pkg="nodelet"
+        type="nodelet"
+        name="trackers_manager"
+        args="load trackers_manager/TrackersManager standalone_nodelet"
+        output="screen">
+        <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/trackers.yaml"/>
+        <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/$(arg model)_gains.yaml"/>
+        <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/hummingbird_params.yaml"/>
+        <param name="default_v_des" value="3.0"/>
+        <param name="default_a_des" value="1.0"/>
+        <param name="use_whycon" value="$(arg use_estimator)"/>
+
+        <remap from="~odom_payload_vicon" to="odom_payload"/>
+        <remap from="~odom_payload_estimate" to="odom_payload_estimate"/>
+        <remap from="~odom_quadrotor" to="odom_quadrotor"/>
+
+        <remap from="~cmd_payload" to="position_cmd_payload"/>
+        <remap from="~cmd_quadrotor" to="position_cmd_quadrotor"/>
+
+        <remap from="~trajectory_tracker_coeffs/current_traj" to="current_traj"/>
+        <remap from="~trajectory_tracker_coeffs/unpublish_traj" to="unpublish_traj"/>
+    </node>
+
+    <node pkg="nodelet"
+      type="nodelet"
+      args="load so3_control/SO3ControlNodelet standalone_nodelet"
+      name="so3_control"
+      required="true"
+      output="screen">
+      <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/hummingbird_params.yaml"/>
+      <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/QuadrotorDopey_gains.yaml"/>
+
+      <remap from="~odom" to="odom_quadrotor"/>
+      <remap from="~position_cmd" to="position_cmd_quadrotor"/>
+      <remap from="~motors" to="motors"/>
+
+      <remap from="~so3_cmd" to="so3_cmd"/>
+    </node>
+
+  <!--  <node pkg="nodelet"
+      type="nodelet"
+      args="load so3_control/PointloadSO3Nodelet standalone_nodelet"
+      name="pointload_so3_control"
+      required="true"
+      output="screen">
+      <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/QuadrotorDopey_pointload_gains.yaml"/>
+      <param name="use_whycon" value="$(arg use_estimator)"/>
+
+      <remap from="~odom_estimate" to="odom_estimate"/>
+      <remap from="~odom_vicon" to="odom_vicon"/>
+      <remap from="~position_cmd_payload" to="position_cmd_payload"/>
+      <remap from="~motors" to="motors"/>
+
+      <remap from="~so3_cmd" to="so3_cmd"/>
+    </node>
+-->
+    <!-- communication --> 
+    <include file="$(find quadrotor_exp_launch)/ICRA2018/robot_comms.launch" unless="$(arg sim)">
+      <arg name="zigbee" value="$(arg zigbee)"/>
+      <arg name="baud_rate" value="57600"/>
+    </include>
+
+    <!-- manager --> 
+    <node pkg="traj_quadrotor"
+      type="trajectory_services"
+      name="mav_services"
+      clear_params="true"
+      output="screen">
+      <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/mav_manager_params.yaml" />
+      <param name="home_path" value="$(arg home_path)"/>
+      <remap from="odom" to="odom_quadrotor"/>
+    </node>
+
+  </group>
+</launch>
+

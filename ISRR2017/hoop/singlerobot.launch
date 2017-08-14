@@ -8,6 +8,7 @@
   <arg name="initial_position_payload/x"/>
   <arg name="initial_position_payload/y"/>
   <arg name="initial_position_payload/z"/>
+  <arg name="usb_num"/>
 
   <group ns="Quadrotor$(arg name)">
   
@@ -71,7 +72,7 @@
       <rosparam file="$(find quadrotor_exp_launch)/ISRR2017/config/QuadrotorVictor_gains.yaml"/>
       <rosparam file="$(find quadrotor_exp_launch)/ISRR2017/config/hummingbird_params.yaml"/>
       <param name="default_v_des" value="0.2"/>
-      <param name="default_a_des" value="0.3"/>
+      <param name="default_a_des" value="0.2"/>
       <remap from="~odom" to="odom"/>
       <remap from="~cmd" to="position_cmd"/>
       <remap from="~trajectory_tracker_coeffs/current_traj" to="current_traj"/>
@@ -96,9 +97,10 @@
     </node>
 
     <!-- communication --> 
-    <include file="$(find quadrotor_exp_launch)/ISRR2017/single_robot/robot_comms.launch" unless="$(arg sim)">
+    <include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/robot_comms.launch" unless="$(arg sim)">
       <arg name="zigbee" value="$(arg zigbee)"/>
       <arg name="baud_rate" value="57600"/>
+      <arg name="usb_num" value="$(arg usb_num)"/>
     </include>
 
     <!-- manager --> 

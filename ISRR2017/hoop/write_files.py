@@ -2,22 +2,25 @@
 
 # Sarah Tang
 # Simple script that takes a .yaml file containing a multirobot problem and outputs
+# all files for experiments, namely: 
 # 1. a roslaunch file that will launch the proper set of nodes for each robot
 # 2. an rviz_config file that will add the proper markers for each robot.
+# 3. a vicon file that will add the proper remaps for each robot.
+# 4. a log_data.sh script that will log all relevant topics
 
 import sys
 import argparse
 import yaml
 
-SCRIPT_TEMPLATE = """<launch>
+LAUNCH_TEMPLATE = """<launch>
   <arg name="home_path" default="/home/sytang/catkin_multirobot/src/quadrotor_exp_launch/ISRR2017/hoop"/>
   <arg name="sim" default="1"/>
-  <arg name="mass" default="0.6650"/>
+  <arg name="mass" default="0.70"/>
   <arg name="zigbee" default="1"/>
 
   <param name="simulator_frame" value="simulator"/>
   <rosparam file="$(find quadrotor_exp_launch)/ISRR2017/config/quadrotor_names.yaml"/>
-  <rosparam file="$(find hoop)/config/pointload_params.yaml" />
+  <rosparam file="$(find quadrotor_exp_launch)/ISRR2017/config/pointload_params.yaml" />
   <param name="debug" value="false"/>
 
   <!-- For the planning problem.-->
@@ -25,8 +28,8 @@ SCRIPT_TEMPLATE = """<launch>
     type="hoop_main"
     name="hoop"
     output="screen">
-    <rosparam file="$(find hoop)/config/goals_2.yaml" />
-    <param name="precision" value="Double"/>
+    <rosparam file="$(find quadrotor_exp_launch)/ISRR2017/config/goals_6.yaml" />
+    <param name="precision" value="Float"/>
     <param name="basis" value="Power"/>
     <param name="centralized" value="true"/>
     <param name="goal_threshold" value="0.01"/>
@@ -56,7 +59,7 @@ SCRIPT_TEMPLATE = """<launch>
 </launch>  """
 
 
-ROBOT_TEMPLATE = """<include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
+LAUNCH_ROBOT = """<include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/singlerobot.launch">
     <arg name="name" value="{robot_name}"/>
     <arg name="initial_position_payload/x" value="{init_x}"/>
     <arg name="initial_position_payload/y" value="{init_y}"/>
@@ -65,6 +68,7 @@ ROBOT_TEMPLATE = """<include file="$(find quadrotor_exp_launch)/ISRR2017/hoop/si
     <arg name="sim" value="$(arg sim)"/>
     <arg name="mass"  value="$(arg mass)"/>
     <arg name="zigbee"  value="$(arg zigbee)"/>
+    <arg name="usb_num" value="{usb_num}"/>
   </include> 
 
   """
@@ -184,7 +188,7 @@ Window Geometry:
   Y: 25"""
 
 
-MARKERS_TEMPLATE = """
+RVIZ_ROBOT = """
     - Class: rviz/Axes
       Enabled: true
       Length: 1
@@ -210,14 +214,42 @@ MARKERS_TEMPLATE = """
       Value: true"""
 
 
+VICON_TEMPLATE = """<launch>
+
+  <node pkg="mocap_vicon"
+    type="mocap_vicon_node"
+    name="vicon"
+    output="screen">
+    <param name="server_address" value="mocap"/> <!-- mocap, lev: 192.168.129.74 --> 
+    <param name="frame_rate" value="100"/>
+    <param name="max_accel" value="10.0"/>
+    <param name="publish_tf" value="false"/>
+    <param name="fixed_frame_id" value="mocap"/>
+    <rosparam param="model_list">[]</rosparam>
+{}
+  </node>
+</launch>"""
+
+
+VICON_ROBOT = """    <remap from="vicon/Quadrotor{robot_name}/odom" to="Quadrotor{robot_name}/odom"/>
+"""
+
+ROS_TOPICS_TEMPLATE = """rosbag record /Quadrotor{robot_name}/current_traj /Quadrotor{robot_name}/odom /vicon/Payload{robot_name}/odom /Quadrotor{robot_name}/position_cmd /Quadrotor{robot_name}/position_cmd_echo /Quadrotor{robot_name}/so3_cmd /Quadrotor{robot_name}/payload_cmd /Quadrotor{robot_name}/so3_control/corrections /Quadrotor{robot_name}/trackers_manager/pointload_ff_tracker/traj_started """
+
+
 parser = argparse.ArgumentParser(description="")
 parser.add_argument('robots_filename', type=str, help="filepath to yaml file")
-parser.add_argument('launch_filename', type=str, help="filepath to roslaunch output file")
-parser.add_argument('rviz_filename', type=str, help="filepath to rviz_config output file")
+#parser.add_argument('launch_filename', type=str, help="filepath to roslaunch output file")
+#parser.add_argument('rviz_filename', type=str, help="filepath to rviz_config output file")
 
 args = parser.parse_args()
 #print args
 
+# Some default filenames.
+launch_filename="test.launch" #args.launch_filename
+rviz_filename="rviz_config.rviz" #args.rviz_filename
+vicon_filename="vicon.launch" #args.vicon_filename
+log_filename="log_data.sh"
 
 # Read the yaml file to get robot names
 print "Opening the yaml file..."
@@ -237,30 +269,66 @@ if (len(params['sim_init_y']) != num_robots):
 if (len(params['sim_init_z']) != num_robots):
   print "sim_init_z not the same size as names"
   sys.exit()
+if (len(params['usb']) != num_robots):
+  print "usb numbers not the same size as names"
+  sys.exit()
+
+
 
 # Construct launchfile string.
 launch_string = ""
 for ii in range(num_robots):
-  launch_string += ROBOT_TEMPLATE.format(robot_name=params['quadrotor_names'][ii],
+  launch_string += LAUNCH_ROBOT.format(robot_name=params['quadrotor_names'][ii],
     init_x=params['sim_init_x'][ii],
     init_y=params['sim_init_y'][ii],
-    init_z=params['sim_init_z'][ii])
+    init_z=params['sim_init_z'][ii],
+    usb_num=params['usb'][ii])
 #print launch_string
-launch_string=SCRIPT_TEMPLATE.format(launch_string)
+launch_string=LAUNCH_TEMPLATE.format(launch_string)
 
 # Write to output file.
 print "Opening the roslaunch output file..."
-with open(args.launch_filename, 'w') as launch_file:
+with open(launch_filename, 'w') as launch_file:
   launch_file.write(launch_string)
+
+
+
 
 # Construct rviz string.
 rviz_string = ""
 for ii in range(num_robots):
-  rviz_string += MARKERS_TEMPLATE.format(robot_name=params['quadrotor_names'][ii])
+  rviz_string += RVIZ_ROBOT.format(robot_name=params['quadrotor_names'][ii])
 print rviz_string
 rviz_string=RVIZ_TEMPLATE.format(rviz_string)
 
 # Write to output file.
 print "Opening the rviz config output file..."
-with open(args.rviz_filename, 'w') as rviz_file:
+with open(rviz_filename, 'w') as rviz_file:
   rviz_file.write(rviz_string)
+
+
+
+
+# Construct remap string.
+remap_string = ""
+for ii in range(num_robots):
+  remap_string += VICON_ROBOT.format(robot_name=params['quadrotor_names'][ii])
+#print remap_string
+
+# Construct launch string.
+vicon_string = VICON_TEMPLATE.format(remap_string)
+
+# Write to output file.
+print "Opening the roslaunch output file..."
+with open(vicon_filename, 'w') as vicon_file:
+  vicon_file.write(vicon_string)
+
+
+rosbag_string = "rosbag record "
+for ii in range(num_robots):
+  rosbag_string += ROS_TOPICS_TEMPLATE.format(robot_name=params['quadrotor_names'][ii])
+
+# Write to output file.
+print "Opening the logging file..."
+with open(log_filename, 'w') as log_file:
+  log_file.write(rosbag_string)
