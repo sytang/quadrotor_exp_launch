@@ -24,6 +24,6 @@ sleep 1
 
 read -p "Press [Enter] shift setpoint"
 echo "Moving right..."
-rosservice call /$ROBOT/mav_services/goToRelative '{goal: [1.0, 0.0, 0.0, 0.0]}'
+rosservice call /$ROBOT/mav_services/goToRelative '{goal: [0.0, 0.0, 0.5, 0.0]}'
 sleep 1
 

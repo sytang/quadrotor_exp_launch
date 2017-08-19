@@ -8,7 +8,7 @@
   <arg name="zigbee" default="1"/>
   <!-- Use camera for feedback or not -->
   <arg name="use_vision_feedback" default="false"/>
-  <arg name="payload_feedback" default="false"/>
+  <arg name="payload_feedback" default="true"/>
   <!-- Track with camera or not -->
   <arg name="use_camera" default="false"/>
   <arg name="filter_velocities" default="false"/>
