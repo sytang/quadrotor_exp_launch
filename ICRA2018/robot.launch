@@ -1,6 +1,6 @@
 <launch>
 
-  <arg name="name" default="Dopey"/>
+  <arg name="name" default="Happy"/>
   <arg name="model" default="Quadrotor$(arg name)"/>
   <arg name="home_path" default="/home/sytang/catkin_multirobot/src/quadrotor_exp_launch/ICRA2018/"/>
   <arg name="sim" default="1"/>
@@ -13,34 +13,16 @@
   <arg name="use_camera" default="false"/>
   <arg name="filter_velocities" default="false"/>
 
-  <!-- VICON --> 
-  <include file="$(find quadrotor_exp_launch)/ICRA2018/vicon.launch" unless="$(arg sim)">
-    <arg name="model" value="$(arg model)" /> 
-  <!--arg name="vicon_fps" value="100"/-->
-  </include>
-
   <group ns="$(arg model)">
   
     <param name="mass" value="$(arg mass)"/>
 
-    <node name="vicon_publisher"
-      type="vicon_publisher"
-      pkg="whycon"
-      output="screen">
-
-      <param name="vicon_quad_topic" value="odom_quadrotor"/>
-      <param name="vicon_payload_topic" value="odom_payload"/>
-      <param name="transform_to_world_frame" type="bool" value="true"/>
-      <param name="publish_observ_dir" type="bool" value="true"/>
-      <param name="filter_velocities" type="bool" value="$(arg filter_velocities)"/>
-      <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/hummingbird_params.yaml"/>
-
-      <remap from="~odom_quadrotor" to="odom_quadrotor"/>
-      <remap from="~odom_payload" to="odom_payload"/>
-    
-      <remap from="~relative_pos" to="relative_pos" unless="$(arg use_camera)"/>
-      <remap from="~odom_payload_vicon" to="odom_vicon_synced"/>
-    </node>
+    <!-- VICON --> 
+    <include file="$(find quadrotor_exp_launch)/ICRA2018/vicon.launch" unless="$(arg sim)">
+      <arg name="model" value="$(arg model)" /> 
+      <arg name="name" value="$(arg name)" />
+    <!--arg name="vicon_fps" value="100"/-->
+    </include>
 
     <!-- SIMULATOR --> 
     <group if="$(arg sim)">
@@ -80,6 +62,26 @@
       <param name="sample_rate" value="0.5"/>
     </node>
 
+    <!-- ODOMETRY BROADCASTER -->
+    <node name="vicon_publisher"
+      type="vicon_publisher"
+      pkg="whycon"
+      output="screen">
+
+      <param name="vicon_quad_topic" value="odom_quadrotor"/>
+      <param name="vicon_payload_topic" value="odom_payload"/>
+      <param name="transform_to_world_frame" type="bool" value="true"/>
+      <param name="publish_observ_dir" type="bool" value="true"/>
+      <param name="filter_velocities" type="bool" value="$(arg filter_velocities)"/>
+      <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/hummingbird_params.yaml"/>
+
+      <remap from="~odom_quadrotor" to="odom_quadrotor"/>
+      <remap from="~odom_payload" to="odom_payload"/>
+    
+      <remap from="~relative_pos" to="relative_pos" unless="$(arg use_camera)"/>
+      <remap from="~odom_payload_vicon" to="odom_vicon_synced"/>
+    </node>
+
     <!-- CONTROLLER --> 
     <node pkg="nodelet"
       type="nodelet"
@@ -95,8 +97,8 @@
         <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/trackers.yaml"/>
         <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/$(arg model)_gains.yaml"/>
         <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/hummingbird_params.yaml"/>
-        <param name="default_v_des" value="0.5"/>
-        <param name="default_a_des" value="0.5"/>
+        <param name="default_v_des" value="1.0"/>
+        <param name="default_a_des" value="1.0"/>
         <param name="use_whycon" type="bool" value="$(arg use_vision_feedback)"/>
         <param name="payload_feedback" type="bool" value="$(arg payload_feedback)"/>
 

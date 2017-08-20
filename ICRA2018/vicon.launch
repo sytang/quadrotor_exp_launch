@@ -1,5 +1,6 @@
 <launch>
   <arg name="model" default="quadrotor"/>
+  <arg name="name" default=""/>
 
   <node pkg="mocap_vicon"
     type="mocap_vicon_node"
@@ -11,6 +12,7 @@
     <param name="publish_tf" value="false"/>
     <param name="fixed_frame_id" value="mocap"/>
     <rosparam param="model_list">[]</rosparam>
-    <remap from="vicon/$(arg model)/odom" to="$(arg model)/odom"/>
+    <remap from="vicon/$(arg model)/odom" to="odom_quadrotor"/>
+    <remap from="vicon/Payload$(arg name)/odom" to="odom_payload"/>
   </node>
 </launch>

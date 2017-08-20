@@ -58,18 +58,18 @@ Visualization Manager:
       Value: true
     - Class: rviz/Marker
       Enabled: true
-      Marker Topic: /QuadrotorDopey/payload_visualization/robot
+      Marker Topic: /QuadrotorHappy/payload_visualization/robot
       Name: Robot
       Namespaces:
-        /QuadrotorDopey/payload_visualization: true
+        /QuadrotorHappy/payload_visualization: true
       Queue Size: 2
       Value: true
     - Class: rviz/Marker
       Enabled: true
-      Marker Topic: /QuadrotorDopey/trajectory_visualization/robot_current_traj
+      Marker Topic: /QuadrotorHappy/trajectory_visualization/robot_current_traj
       Name: Marker
       Namespaces:
-        /QuadrotorDopey/trajectory_visualization: true
+        /QuadrotorHappy/trajectory_visualization: true
       Queue Size: 100
       Value: true
   Enabled: true

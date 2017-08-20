@@ -2,7 +2,7 @@ model_name: QuadrotorPointload
 gravity: 9.81
 mass: 0.6
 massL: 0.1
-cable_length: 0.7
+cable_length: 0.5
 Ixx: 2.64e-3
 Iyy: 2.64e-3
 Izz: 4.96e-3
