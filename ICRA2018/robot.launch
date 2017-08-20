@@ -95,8 +95,8 @@
         <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/trackers.yaml"/>
         <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/$(arg model)_gains.yaml"/>
         <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/hummingbird_params.yaml"/>
-        <param name="default_v_des" value="3.0"/>
-        <param name="default_a_des" value="1.0"/>
+        <param name="default_v_des" value="0.5"/>
+        <param name="default_a_des" value="0.5"/>
         <param name="use_whycon" type="bool" value="$(arg use_vision_feedback)"/>
         <param name="payload_feedback" type="bool" value="$(arg payload_feedback)"/>
 
