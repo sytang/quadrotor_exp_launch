@@ -84,9 +84,9 @@ second_x = params['first_pos']['x']
 waypoints_string ="{x: [" + str(first_x)
 add_dist = dist_between_cones + base_length
 for ii in range(num_cones - 1):
-  waypoints_string += ", " + str(second_x + (ii * add_dist))
-second_last_x = second_x + ((num_cones - 1) * add_dist)
-last_x = second_last_x + end_dist + base_length / 2.0
+  waypoints_string += ", " + str(second_x + (ii * add_dist) * params['direction_x'])
+second_last_x = second_x + ((num_cones - 1) * add_dist * params['direction_x'])
+last_x = second_last_x + (end_dist + base_length / 2.0) * params['direction_x']
 
 first_y =params['robot_init_pos']['y'] - (base_length / 2.0 + side_clearance)
 waypoints_string += ", " + str(second_last_x) + ", " + str(last_x) + "], y:[" + str(first_y)
