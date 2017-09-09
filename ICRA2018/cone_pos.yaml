@@ -10,11 +10,11 @@ base_length: 0.38
 num_cones: 4
 # clearance from the side of the base, m
 side_clearance: 0.1
-end_dist: 0.8
-time_factor: 1.0
+end_dist: 0.6
 vdes: 0.5
 #time_start: 1.0
-time_between_cones: 1.0
+time_between_cones: 0.5
 #time_end: 1.0
 # move in positive or negative x
 direction_x: -1.0
+time_factor: 2.0

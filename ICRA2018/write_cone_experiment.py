@@ -82,22 +82,30 @@ end_dist = params['end_dist']
 first_x = params['robot_init_pos']['x']
 second_x = params['first_pos']['x']
 waypoints_string ="{x: [" + str(first_x)
-add_dist = dist_between_cones + base_length
+x_dist = second_x
+add_dist = (dist_between_cones + base_length) / 2.0
 for ii in range(num_cones - 1):
-  waypoints_string += ", " + str(second_x + (ii * add_dist) * params['direction_x'])
+  # Add midpoint
+  x_dist += add_dist * params['direction_x']
+  waypoints_string += ", " + str(x_dist)
+  # Add sidepoint
+  x_dist += add_dist * params['direction_x']
+  waypoints_string += ", " + str(x_dist)
 second_last_x = second_x + ((num_cones - 1) * add_dist * params['direction_x'])
 last_x = second_last_x + (end_dist + base_length / 2.0) * params['direction_x']
 
 first_y =params['robot_init_pos']['y'] - (base_length / 2.0 + side_clearance)
-waypoints_string += ", " + str(second_last_x) + ", " + str(last_x) + "], y:[" + str(first_y)
 y_coord = params['first_pos']['y']
 add_dist = base_length / 2.0 + side_clearance
 second_y = y_coord + add_dist
-sign = 1;
-y_coord = params['first_pos']['y']
-for ii in range(num_cones):
+waypoints_string += ", " + str(second_last_x) + ", " + str(last_x) + "], y:[" + str(first_y) + ", " + str(second_y)
+sign = -1.0;
+for ii in range(num_cones - 1):
+  # Add midpoint
+  waypoints_string += ", " + str(params['first_pos']['y'])
+  # Add sidepoint
   waypoints_string += ", " + str(y_coord + sign * add_dist)
-  sign *= -1
+  sign *= -1.0
 second_last_y = y_coord + (-sign) * add_dist
 last_y = y_coord + sign * (add_dist)
 
@@ -105,14 +113,15 @@ z_coord = params['robot_init_pos']['z']
 first_z = z_coord
 second_z = z_coord
 waypoints_string += ", " + str(last_y) + "], z:[" + str(z_coord)
-for ii in range(num_cones):
+for ii in range(2 * num_cones):
   waypoints_string += ", " + str(z_coord)
-waypoints_string += ", " + str(z_coord) + "], yaw:[0.0"
-for ii in range(num_cones):
-  waypoints_string += ", 0.0"
-waypoints_string = waypoints_string + ", " + str(0.0) + "]"
 second_last_z = z_coord
 last_z = z_coord
+
+waypoints_string += "], yaw:[0.0"
+for ii in range(2 * num_cones):
+  waypoints_string += ", 0.0"
+waypoints_string = waypoints_string + "]"
 
 print waypoints_string
 
@@ -121,7 +130,7 @@ time_scale = params['time_factor']
 first_time = (math.sqrt(math.pow(first_x - second_x, 2) + math.pow(first_y - second_y, 2) + math.pow(first_z - second_z, 2))) / params['vdes']
 breaktimes_string += str(first_time * time_scale)
 next_time = first_time
-for ii in range(num_cones - 1):
+for ii in range(2 * num_cones):
   next_time = (next_time + params['time_between_cones'])
   breaktimes_string += ", " + str(next_time * time_scale)
 # Last coordinate next to a cone.
