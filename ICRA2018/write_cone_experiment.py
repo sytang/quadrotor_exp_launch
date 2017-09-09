@@ -81,7 +81,7 @@ end_dist = params['end_dist']
 # Construct the string of waypoints needed to visit. 
 first_x = params['robot_init_pos']['x']
 second_x = params['first_pos']['x']
-waypoints_string ="{x: [" + str(first_x)
+waypoints_string ="{x: [" + str(first_x) + ", " + str(second_x)
 x_dist = second_x
 add_dist = (dist_between_cones + base_length) / 2.0
 for ii in range(num_cones - 1):
@@ -91,14 +91,14 @@ for ii in range(num_cones - 1):
   # Add sidepoint
   x_dist += add_dist * params['direction_x']
   waypoints_string += ", " + str(x_dist)
-second_last_x = second_x + ((num_cones - 1) * add_dist * params['direction_x'])
-last_x = second_last_x + (end_dist + base_length / 2.0) * params['direction_x']
+second_last_x = params['first_pos']['x'] + ((num_cones - 1) * (dist_between_cones + base_length)) * params['direction_x']
+last_x = second_last_x + ((end_dist + base_length / 2.0) * params['direction_x'])
 
 first_y =params['robot_init_pos']['y'] - (base_length / 2.0 + side_clearance)
 y_coord = params['first_pos']['y']
 add_dist = base_length / 2.0 + side_clearance
 second_y = y_coord + add_dist
-waypoints_string += ", " + str(second_last_x) + ", " + str(last_x) + "], y:[" + str(first_y) + ", " + str(second_y)
+waypoints_string += ", " + str(last_x) + "], y:[" + str(first_y) + ", " + str(second_y)
 sign = -1.0;
 for ii in range(num_cones - 1):
   # Add midpoint
@@ -130,7 +130,7 @@ time_scale = params['time_factor']
 first_time = (math.sqrt(math.pow(first_x - second_x, 2) + math.pow(first_y - second_y, 2) + math.pow(first_z - second_z, 2))) / params['vdes']
 breaktimes_string += str(first_time * time_scale)
 next_time = first_time
-for ii in range(2 * num_cones):
+for ii in range(2 * (num_cones - 1)):
   next_time = (next_time + params['time_between_cones'])
   breaktimes_string += ", " + str(next_time * time_scale)
 # Last coordinate next to a cone.
