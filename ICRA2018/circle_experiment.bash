@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ROBOT="QuadrotorDopey"
+ROBOT="QuadrotorHappy"
 
 read -p "Press [Enter] to start motors"
 echo "Enable motors..."
@@ -12,10 +12,10 @@ echo "Takeoff..."
 rosservice call /$ROBOT/mav_services/takeoff
 sleep 1
 
-read -p "Press [Enter] to go to initial position"
-echo "Going to position..."
-rosservice call /$ROBOT/mav_services/goTo '{goal: [0.0, 0.0, 3.0, 0.0]}'
-sleep 1
+#read -p "Press [Enter] to go to initial position"
+#echo "Going to position..."
+#rosservice call /$ROBOT/mav_services/goTo '{goal: [0.0, 0.0, 3.0, 0.0]}'
+#sleep 1
 
 read -p "Press [Enter] to switch to payload tracking"
 echo "Switching to payload control..."
@@ -24,7 +24,9 @@ sleep 1
 
 read -p "Press [Enter] to start circle"
 echo "Circling..."
-rosservice call /$ROBOT/mav_services/circle "{Ax: 1, Ay: 0.5, T: 10.0, duration: 20.0}" 
+rosservice call /$ROBOT/mav_services/circle "{Ax: 1.5, Ay: 1.0, T: 2.5, duration: 3.0}" 
+# for l = 0.5, T = 1.4 is the natural frequency
+# T = 2*pi*sqrt(l/g)
 sleep 1
 
 read -p "Press [Enter] to switch to payload tracking"

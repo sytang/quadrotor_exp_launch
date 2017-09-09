@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ROBOT="QuadrotorDopey"
+ROBOT="QuadrotorHappy"
 
 read -p "Press [Enter] to start motors"
 echo "Enable motors..."
@@ -12,10 +12,10 @@ echo "Takeoff..."
 rosservice call /$ROBOT/mav_services/takeoff
 sleep 1
 
-read -p "Press [Enter] to go to initial position"
-echo "Going to position..."
-rosservice call /$ROBOT/mav_services/goTo '{goal: [0.0, 0.0, 3.0, 0.0]}'
-sleep 1
+#read -p "Press [Enter] to go to initial position"
+#echo "Going to position..."
+#rosservice call /$ROBOT/mav_services/goTo '{goal: [0.0, 0.0, 3.0, 0.0]}'
+#sleep 1
 
 read -p "Press [Enter] to switch to payload tracking"
 echo "Switching to payload control..."
@@ -24,7 +24,17 @@ sleep 1
 
 read -p "Press [Enter] to load trajectory waypoints"
 echo "Loading waypoints..."
-rosservice call /$ROBOT/mav_services/loadWaypoints "{x: [-5.0, -3.0, 2.0], y: [1.0, 0.0, 0.2], z: [1.0, 1.5, 1.2], yaw: [0.0, 0.0, 0.0], vdes: 0.5}" 
+rosservice call /$ROBOT/mav_services/loadWaypoints "{x: [0.0, 0.5], y: [0.0, 0.0], z: [0.0, 0.0], yaw: [0.0, 0.0], vdes: 0.2, cost: 6}" 
+sleep 1
+
+read -p "Press [Enter] to follow trajectory waypoints"
+echo "Following waypoints..."
+rosservice call /$ROBOT/mav_services/followWaypoints "{relative: true}" 
+sleep 1
+
+read -p "Press [Enter] to load trajectory waypoints"
+echo "Loading waypoints..."
+rosservice call /$ROBOT/mav_services/loadWaypoints "{x: [0.0, -7.0], y: [0.0, 0.0], z: [0.0, -0.3], yaw: [0.0, 0.0], vdes: 0.2, cost: 6}" 
 sleep 1
 
 read -p "Press [Enter] to follow trajectory waypoints"

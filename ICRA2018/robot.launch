@@ -40,6 +40,15 @@
     </node>
     </group>
 
+   <node pkg="mesh_visualization"
+      type="mesh_visualization"
+      name="mesh_visualization"
+      output="screen"
+      if="$(arg sim)">
+      <param name="mesh_resource" value="package://mesh_visualization/mesh/hummingbird.mesh"/>
+      <remap from="~input" to="odom_quadrotor"/>
+    </node>
+
     <node pkg="payload_visualization"
       type="pointload_visualization"
       name="payload_visualization"
@@ -97,11 +106,12 @@
         <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/trackers.yaml"/>
         <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/$(arg model)_gains.yaml"/>
         <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/hummingbird_params.yaml"/>
-        <param name="default_v_des" value="1.0"/>
-        <param name="default_a_des" value="1.0"/>
+        <param name="default_v_des" value="0.5"/>
+        <param name="default_a_des" value="0.2"/>
         <param name="use_whycon" type="bool" value="$(arg use_vision_feedback)"/>
         <param name="payload_feedback" type="bool" value="$(arg payload_feedback)"/>
-
+        <param name="pos_threshold" value="0.5"/>
+        
         <remap from="~odom_payload_vicon" to="odom_payload"/>
         <remap from="~odom_quadrotor" to="odom_quadrotor"/>
         <remap from="~odom_payload_estimate" to="odom_payload_estimate"/>
@@ -140,9 +150,14 @@
       <param name="use_whycon" type="bool" value="$(arg use_vision_feedback)"/>
       <param name="quadrotor_name" value="Quadrotor$(arg name)"/>
       <param name="use_feedforward" type="bool" value="true"/>
+      <param name="estimate_derivatives" type="bool" value="false"/>
+      <param name="window_size" type="int" value="30"/>
 
+      <remap from="~traj_start" to="traj_start"/>
+      <remap from="~traj_end" to="traj_end"/>
       <remap from="~odom_vision" to="odom_estimate" if="$(arg use_vision_feedback)"/>
-      <remap from="~odom_vicon" to="odom_vicon_synced"/>
+      <remap from="~odom_vicon" to="odom_internal" if="$(arg sim)"/>
+      <remap from="~odom_vicon" to="odom_vicon_synced" unless="$(arg sim)"/>
       <remap from="~position_cmd_payload" to="position_cmd_payload"/>
       <remap from="~motors" to="motors"/>
 
@@ -182,6 +197,8 @@
       <rosparam file="$(find quadrotor_exp_launch)/ICRA2018/config/mav_manager_params.yaml" />
       <param name="home_path" value="$(arg home_path)"/>
       <remap from="odom" to="odom_quadrotor"/>
+      <remap from="~traj_start" to="traj_start"/>
+      <remap from="~traj_end" to="traj_end"/>
     </node>
 
   </group>

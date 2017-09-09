@@ -239,8 +239,6 @@ ROS_TOPICS_TEMPLATE = """rosbag record /Quadrotor{robot_name}/current_traj /Quad
 
 parser = argparse.ArgumentParser(description="")
 parser.add_argument('robots_filename', type=str, help="filepath to yaml file")
-#parser.add_argument('launch_filename', type=str, help="filepath to roslaunch output file")
-#parser.add_argument('rviz_filename', type=str, help="filepath to rviz_config output file")
 
 args = parser.parse_args()
 #print args
