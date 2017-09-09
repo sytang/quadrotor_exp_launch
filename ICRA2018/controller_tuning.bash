@@ -1,6 +1,10 @@
 #!/bin/bash
 
-ROBOT="QuadrotorHappy"
+ROBOT="quadrotor"
+
+echo "Disable motors..."
+rosservice call /$ROBOT/mav_services/motors false
+sleep 1
 
 read -p "Press [Enter] to start motors"
 echo "Enable motors..."
