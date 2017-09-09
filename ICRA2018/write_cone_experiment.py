@@ -31,17 +31,17 @@ sleep 1
 read -p "Press [Enter] to switch to payload tracking"
 echo "Switching to payload control..."
 rosservice call /{robot_name}/trackers_manager/track_payload '{data_string}'
-sleep 1
+sleep 15
 
-read -p "Press [Enter] to load trajectory waypoints"
+# read -p "Press [Enter] to load trajectory waypoints"
 echo "Loading waypoints..."
 rosservice call /{robot_name}/mav_services/loadTimedWaypoints "{timed_waypoints_str}" 
-sleep 1
+sleep 2
 
-read -p "Press [Enter] to follow trajectory waypoints"
+# read -p "Press [Enter] to follow trajectory waypoints"
 echo "Following waypoints..."
 rosservice call /{robot_name}/mav_services/followWaypoints "{relative_string}" 
-sleep 1
+# sleep 1
 
 read -p "Press [Enter] to eland" 
 echo "EMERGENCY!!!!!"
@@ -91,7 +91,7 @@ last_x = second_last_x + (end_dist + base_length / 2.0) * params['direction_x']
 first_y =params['robot_init_pos']['y'] - (base_length / 2.0 + side_clearance)
 waypoints_string += ", " + str(second_last_x) + ", " + str(last_x) + "], y:[" + str(first_y)
 y_coord = params['first_pos']['y']
-add_dist = base_length / 2.0 + side_clearance
+add_dist = side_clearance + base_length/2.0
 second_y = y_coord + add_dist
 sign = 1;
 y_coord = params['first_pos']['y']

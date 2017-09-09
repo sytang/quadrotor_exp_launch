@@ -1,39 +1,39 @@
 echo "Stop motors for safety"
-rosservice call /QuadrotorHappy/mav_services/motors false
+rosservice call /quadrotor/mav_services/motors false
 sleep 1
 
 read -p "Press [Enter] to start motors"
 echo "Enable motors..."
-rosservice call /QuadrotorHappy/mav_services/motors true
+rosservice call /quadrotor/mav_services/motors true
 sleep 1
 
 read -p "Press [Enter] to takeoff"
 echo "Takeoff..."
-rosservice call /QuadrotorHappy/mav_services/takeoff
+rosservice call /quadrotor/mav_services/takeoff
 sleep 1
 
 read -p "Press [Enter] to go to initial position"
 echo "Going to position..."
-rosservice call /QuadrotorHappy/mav_services/goTo '{goal: [6.3, -0.29, 1.046, 0.0]}'
+rosservice call /quadrotor/mav_services/goTo '{goal: [6.3, -0.39, 1.578, 0.0]}'
 sleep 1
 
 read -p "Press [Enter] to switch to payload tracking"
 echo "Switching to payload control..."
-rosservice call /QuadrotorHappy/trackers_manager/track_payload '{data: true}'
-sleep 1
+rosservice call /quadrotor/trackers_manager/track_payload '{data: true}'
+sleep 15
 
-read -p "Press [Enter] to load trajectory waypoints"
+# read -p "Press [Enter] to load trajectory waypoints"
 echo "Loading waypoints..."
-rosservice call /QuadrotorHappy/mav_services/loadTimedWaypoints "{x: [6.3, 5.1, 4.22, 3.34, 2.46, 1.47], y:[-0.29, 0.29, -0.29, 0.29, -0.29, 0.29], z:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5], yaw:[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], times: [2.66563313305, 3.66563313305, 4.66563313305, 5.66563313305, 7.96040981063], cost: 6}" 
-sleep 1
+rosservice call /quadrotor/mav_services/loadTimedWaypoints "{x: [6.3, 5.1, 4.22, 3.34, 2.46, 1.67], y:[-0.39, 0.39, -0.39, 0.39, -0.39, 0.39], z:[1.1, 1.1, 1.1, 1.1, 1.1, 1.1], yaw:[0.0, 0.0, 0.0, 0.0, 0.0, 0.0], times: [8.58733951815, 10.0873395182, 11.5873395182, 13.0873395182, 19.7484205115], cost: 6}" 
+sleep 2
 
-read -p "Press [Enter] to follow trajectory waypoints"
+# read -p "Press [Enter] to follow trajectory waypoints"
 echo "Following waypoints..."
-rosservice call /QuadrotorHappy/mav_services/followWaypoints "{relative: false}" 
-sleep 1
+rosservice call /quadrotor/mav_services/followWaypoints "{relative: false}" 
+# sleep 1
 
 read -p "Press [Enter] to eland" 
 echo "EMERGENCY!!!!!"
-rosservice call /QuadrotorHappy/mav_services/eland
+rosservice call /quadrotor/mav_services/eland
 sleep 1
   
