@@ -8,6 +8,11 @@ sleep 1
 
 read -p "Press [Enter] to start motors"
 echo "Enable motors..."
+rosservice call /$ROBOT/mav_services/motors false
+sleep 1
+
+read -p "Press [Enter] to start motors"
+echo "Enable motors..."
 rosservice call /$ROBOT/mav_services/motors true
 sleep 1
 
@@ -33,7 +38,7 @@ sleep 1
 
 read -p "Press [Enter] shift setpoint"
 echo "Moving right..."
-rosservice call /$ROBOT/mav_services/goToRelative '{goal: [1.0, 0.0, 0.0, 0.0]}'
+rosservice call /$ROBOT/mav_services/goToRelative '{goal: [0.0, 1.0, 0.0, 0.0]}'
 sleep 1
 
 read -p "Press [Enter] to switch to quadrotor tracking"

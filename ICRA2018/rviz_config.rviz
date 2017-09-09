@@ -7,6 +7,7 @@ Panels:
         - /Global Options1
         - /Robot1
         - /Marker1
+        - /Marker2
       Splitter Ratio: 0.5
     Tree Height: 561
   - Class: rviz/Selection
@@ -61,7 +62,7 @@ Visualization Manager:
       Marker Topic: /QuadrotorHappy/payload_visualization/robot
       Name: Robot
       Namespaces:
-        /QuadrotorHappy/payload_visualization: true
+        {}
       Queue Size: 2
       Value: true
     - Class: rviz/Marker
@@ -69,7 +70,15 @@ Visualization Manager:
       Marker Topic: /QuadrotorHappy/trajectory_visualization/robot_current_traj
       Name: Marker
       Namespaces:
-        /QuadrotorHappy/trajectory_visualization: true
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /QuadrotorHappy/mesh_visualization/robot
+      Name: Marker
+      Namespaces:
+        /QuadrotorHappy/mesh_visualization: true
       Queue Size: 100
       Value: true
   Enabled: true
