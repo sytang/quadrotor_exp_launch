@@ -1,5 +1,5 @@
 # first position of the robot
-robot_init_pos: {x: 6.3, y: 0.49, z: 0.7}
+robot_init_pos: {x: 6.3, y: 0.49, z: 1.1}
 # position of the first cone's center
 first_pos: {x: 5.1, y: 0.0, z: 0.0}
 # distance between the bases of the cones, m
@@ -11,7 +11,7 @@ num_cones: 4
 # clearance from the side of the base, m
 side_clearance: 0.3
 end_dist: 0.6
-time_factor: 0.9
+time_factor: 1.0
 vdes: 0.5
 #time_start: 1.0
 time_between_cones: 0.5
